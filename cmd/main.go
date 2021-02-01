@@ -2,21 +2,41 @@ package main
 
 import (
 	"fmt"
-	_ "weatherapp-cli/utils"
+
+	"time"
+
+	"github.com/juby-gif/weatherapp-cli/internal/controllers"
+	_ "github.com/juby-gif/weatherapp-cli/internal/models"
+	"github.com/juby-gif/weatherapp-cli/internal/utils"
 )
 
 func main() {
-	// for {
-	// 	choice := utils.ReadConsoleString()
-	// 	if choice == "a" {
-	menu()
-	// 	} else {
-	// 		break
-	// 	}
-	// }
+
+	for {
+		menu()
+		choice := utils.ReadConsoleString()
+		switch choice {
+		case "a", "A":
+			controllers.ProcessRecordCreation()
+
+		case "b", "B":
+			controllers.ProcessRecordListing()
+
+		case "c", "C":
+			controllers.ProcessCalculation()
+
+		default:
+			utils.GetScreenCleared()
+			fmt.Println("Sorry the choice doesn't exist. Please try again!")
+			time.Sleep(3 * time.Second)
+
+		}
+		utils.GetScreenCleared()
+	}
 }
 
 func menu() {
+	utils.GetScreenCleared()
 	fmt.Println("###############################")
 	fmt.Println("# Weather App Command Console #")
 	fmt.Println("###############################")
