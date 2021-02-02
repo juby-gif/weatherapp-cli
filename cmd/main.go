@@ -6,25 +6,38 @@ import (
 	"time"
 
 	"github.com/juby-gif/weatherapp-cli/internal/controllers"
-	_ "github.com/juby-gif/weatherapp-cli/internal/models"
+	"github.com/juby-gif/weatherapp-cli/internal/models"
 	"github.com/juby-gif/weatherapp-cli/internal/utils"
 )
 
 func main() {
-
+	var tsd []models.TimeSeriesDatum
+	fmt.Println(tsd)
 	for {
 		menu()
 		choice := utils.ReadConsoleString()
 		switch choice {
 		case "a", "A":
-			controllers.ProcessRecordCreation()
+			datum := controllers.AddRecord()
+			tsd = append(tsd, datum)
+			menuTopHeader()
+			fmt.Println("Record created!")
+			PressKey()
 
 		case "b", "B":
-			controllers.ProcessRecordListing()
+			utils.GetScreenCleared()
+			controllers.ProcessRecordListing(tsd)
+			PressKey()
 
 		case "c", "C":
 			controllers.ProcessCalculation()
 
+		case "d", "D":
+			utils.GetScreenCleared()
+			menuTopHeader()
+			fmt.Println("Have nice day!")
+			PressKey()
+			utils.GetScreenCleared()
 		default:
 			utils.GetScreenCleared()
 			fmt.Println("Sorry the choice doesn't exist. Please try again!")
@@ -37,10 +50,7 @@ func main() {
 
 func menu() {
 	utils.GetScreenCleared()
-	fmt.Println("###############################")
-	fmt.Println("# Weather App Command Console #")
-	fmt.Println("###############################")
-	fmt.Printf("\n")
+	menuTopHeader()
 	fmt.Println("Menu")
 	fmt.Println("(A) Add a record")
 	fmt.Println("(B) List all records")
@@ -48,4 +58,21 @@ func menu() {
 	fmt.Println("(D) Exit")
 	fmt.Printf("\n")
 	fmt.Println("Please enter choice:")
+}
+
+func PressKey() {
+	fmt.Println("")
+	fmt.Println("PRESS ANY KEY TO CONTINUE")
+	choice := utils.ReadConsoleString()
+	switch choice {
+	default:
+		menu()
+	}
+}
+
+func menuTopHeader() {
+	fmt.Println("###############################")
+	fmt.Println("# Weather App Command Console #")
+	fmt.Println("###############################")
+	fmt.Printf("\n")
 }

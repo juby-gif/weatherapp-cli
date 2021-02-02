@@ -1,15 +1,19 @@
 // FILE: weatherapp-cli/internal/models/models.go
 package models
 
+import (
+	"time"
+)
+
 type TimeSeriesDatum struct {
-	temperature float64
-	humidity    float64
-	pressure    float64
-	co2         float64
-	tvoc        float64
-	date        string
+	Temperature float64
+	Humidity    float64
+	Pressure    float64
+	Co2         float64
+	Tvoc        float64
+	Timestamp   time.Time
 }
 
 type TimeSeriesData struct {
-	tsd []*TimeSeriesDatum
+	Tsd []*TimeSeriesDatum
 }

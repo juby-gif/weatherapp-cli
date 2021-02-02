@@ -4,23 +4,11 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/juby-gif/weatherapp-cli/internal/models"
 	"github.com/juby-gif/weatherapp-cli/internal/utils"
 )
 
-func ProcessRecordCreation() {
-	addRecord()
-	time.Sleep(5 * time.Second)
-}
-
-func ProcessRecordListing() {
-
-}
-
-func ProcessCalculation() {
-
-}
-
-func addRecord() {
+func AddRecord() models.TimeSeriesDatum {
 	utils.GetScreenCleared()
 	fmt.Println("###############################")
 	fmt.Println("# Weather App Command Console #")
@@ -29,7 +17,7 @@ func addRecord() {
 	fmt.Println("Please enter the following records:")
 	fmt.Printf("\n")
 	fmt.Println("Temperature (deg):")
-	temperature := utils.ReadConsoleFloat64()
+	temp := utils.ReadConsoleFloat64()
 	fmt.Println("Humidity (%):")
 	humidity := utils.ReadConsoleFloat64()
 	fmt.Println("Pressure (Pa):")
@@ -39,18 +27,37 @@ func addRecord() {
 	fmt.Println("TVOC (ppb):")
 	tvoc := utils.ReadConsoleFloat64()
 	fmt.Println("Date/Time:")
-	date := utils.ReadConsoleFloat64()
+	timestamp := time.Now()
 	fmt.Printf("\n")
+	utils.GetScreenCleared()
 
-	fmt.Println(temperature, humidity, pressure, co2, tvoc, date)
+	time_series_datum := models.TimeSeriesDatum{
+		Temperature: temp,
+		Humidity:    humidity,
+		Pressure:    pressure,
+		Co2:         co2,
+		Tvoc:        tvoc,
+		Timestamp:   timestamp,
+	}
+	return time_series_datum
+}
 
-	// time_series_datum := &TimeSeriesDatum{
-	// 	temperature: temperature,
-	// 	humidity:    humidity,
-	// 	pressure:    pressure,
-	// 	co2:         co2,
-	// 	tvoc:        tvoc,
-	// 	date:        date,
-	// }
-	// time_series_datum = append(time_series_datum, tsd)
+func ProcessRecordListing(tsd []models.TimeSeriesDatum) {
+	fmt.Println("###############################")
+	fmt.Println("# Weather App Command Console #")
+	fmt.Println("###############################")
+	for _, v := range tsd {
+		fmt.Println("")
+		fmt.Printf("T:%f \n", v.Temperature)
+		fmt.Printf("H:%f \n", v.Humidity)
+		fmt.Printf("P:%f \n", v.Co2)
+		fmt.Printf("C:%f \n", v.Co2)
+		fmt.Printf("T:%f \n", v.Tvoc)
+		fmt.Println("Time:", v.Timestamp)
+		fmt.Println("")
+	}
+}
+
+func ProcessCalculation() {
+
 }
