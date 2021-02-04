@@ -30,8 +30,9 @@ func main() {
 			PressKey()
 
 		case "c", "C":
-			controllers.ProcessCalculation()
-
+			utils.GetScreenCleared()
+			controllers.ProcessCalculation(tsd)
+			PressKey()
 		case "d", "D":
 			utils.GetScreenCleared()
 			menuTopHeader()
@@ -42,7 +43,6 @@ func main() {
 			utils.GetScreenCleared()
 			fmt.Println("Sorry the choice doesn't exist. Please try again!")
 			time.Sleep(3 * time.Second)
-
 		}
 		utils.GetScreenCleared()
 	}

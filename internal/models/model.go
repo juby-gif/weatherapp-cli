@@ -13,7 +13,3 @@ type TimeSeriesDatum struct {
 	Tvoc        float64
 	Timestamp   time.Time
 }
-
-type TimeSeriesData struct {
-	Tsd []*TimeSeriesDatum
-}
